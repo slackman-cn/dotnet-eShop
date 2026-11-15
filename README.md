@@ -67,7 +67,8 @@
 ### 文档清单
 
 - [仓库分析](github-paperless-ngx/analysis.md)：项目结构、依赖、中间件、进程模型、启动命令、部署与配置、数据流
+- [架构设计](github-paperless-ngx/architecture.md)：分层、进程协作、数据模型、主流程与状态机
 - [本机部署与运行](github-paperless-ngx/deploy.md)：独立部署记录（环境、Compose、端口、镜像、管理员、验证、实际问题）
-- [步骤记录](github-paperless-ngx/paperless-ngx-steps.md)：Step 1 下载代码，Step 2 仓库分析，Step 3 本机部署运行
+- [步骤记录](github-paperless-ngx/paperless-ngx-steps.md)：Step 1 下载代码，Step 2 仓库分析，Step 3 本机部署运行，Step 4 架构设计
 - [截图](github-paperless-ngx/screenshots/)：登录页与仪表盘
 - 目录说明见 [github-paperless-ngx/README.md](github-paperless-ngx/README.md)

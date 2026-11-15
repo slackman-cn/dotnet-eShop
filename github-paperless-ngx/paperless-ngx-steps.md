@@ -91,3 +91,23 @@ git clone --depth 1 https://github.com/paperless-ngx/paperless-ngx.git /workspac
 - 本文件追加 Step 3；`README.md` 增加 deploy.md 与 Step 3 结论
 
 **结果：服务保持运行，URL 为 http://127.0.0.1:8000/ 。未改 eShop / Articles，未提交、未推送。**
+
+---
+
+## Step 4：架构分析（2026-11-15 17:10，Asia/Shanghai UTC+8）
+
+目标：基于 3.4.2 源码与已验证的进程模型，撰写独立的架构设计文档，说明系统如何分层、进程如何协作、核心数据如何组织，以及入库、OCR、任务、搜索、工作流、邮件、权限和文档生命周期。不是从零复现手册，也不对照其他项目展开。本步只写文档，不停止正在运行的服务，不提交源码，不推送 GitHub。
+
+### 做了什么
+
+- 再次确认 `/workspace/paperless-ngx` 的 HEAD 仍为 `4610171a94e5932e85a80e480032e397cdb6f309`，版本 3.4.2，未执行 `git pull`，未修改源码。
+- 阅读并依据：`src/paperless/settings/__init__.py` 与 `custom.py`（目录、认证、Channels、beat、数据库引擎、AI 开关、回收站延迟）；`src/paperless/urls.py`、`asgi.py`、`consumers.py`；`src/paperless/models.py`；`src/paperless/parsers/`（注册表与 Tesseract / Tika / 文本 / 邮件 / 远程解析器）；`src/documents/models.py`、`data_models.py`、`tasks.py`、`consumer.py`、`permissions.py`、`matching.py`、`classifier.py`、`search/`、`signals/handlers.py`、`management/commands/document_consumer.py`、`barcodes.py`、`double_sided.py`；`src/paperless_mail/models.py`、`tasks.py`、`mail.py`；`src/paperless_ai/`；`src-ui/package.json`；官方 Compose 与 s6 服务名。
+- 未改 `analysis.md`、`deploy.md` 正文；未改 `github-eShop/`、`github-Articles/`；未写入运行目录中的真实密钥；未停止 eShop、Articles、Paperless 容器。
+- 用脚本统计正文字数（中文字符 + 英文单词，排除围栏代码块和纯路径/命令行）为 **18056**，mermaid 图 **14** 张，落在 15,000–20,000 目标区间。
+
+### 产出
+
+- `/workspace/github-paperless-ngx/architecture.md`
+- 本文件追加 Step 4；`README.md` 增加文档链接与 Step 4 结论
+
+**结果：架构文档已写完。服务保持运行。未推送仓库。**
