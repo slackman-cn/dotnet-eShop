@@ -711,3 +711,67 @@ aspire ps
 - 打包：`/workspace/eshop-docs-step4.tar.gz`（内含 `docs/architecture.md`、`docs/eShop-steps.md`）
 
 **结果：架构设计文档已完成，未推送仓库 ✅**
+
+---
+
+## Step 5：架构设计 v2（2026-11-15，Asia/Tokyo）
+
+按用户反馈，v1（`docs/architecture.md`）过于简洁、缺少关键内容与源码，因此另写 v2，保留 v1 不动。未向 GitHub 推送。撰写期间未执行 `aspire stop`，eShop 编排保持运行。
+
+### 做了什么
+- 从 `/workspace/eShop` 源码（`main`，提交 `913acea66708a59595351174cee9b29f37179d29`）按真实行号摘录代码，版本号取自 `Directory.Packages.props`、`global.json`、`csproj`、`package.json`。
+- 撰写中文文档 `architecture-v2.md`，覆盖技术选型、项目框架、服务拆分、模块通信、认证授权、开发、部署、测试、模式与规划。
+- 在不停止 Aspire 的前提下运行单元测试：`dotnet test tests/Ordering.UnitTests/Ordering.UnitTests.csproj`。
+- 复制文档到 `/workspace/architecture-v2.md`；将本步骤追加到步骤记录；同步到 `eshop-docs` 时替换仪表板令牌；打包 `eshop-docs-step5.tar.gz`。
+
+### 运行的命令与结果
+
+1. 确认编排仍在运行（摘要，令牌不写入公开副本）：
+
+```bash
+export PATH="$HOME/.aspire/bin:$HOME/.dotnet:$HOME/.dotnet/tools:/usr/local/bin:$PATH"
+export DOTNET_ROOT="$HOME/.dotnet"
+aspire ps --non-interactive --nologo
+```
+
+结果：AppHost `eShop.AppHost.csproj` 状态 `running`，SDK 13.6.0，Dashboard 位于 `https://localhost:19888/login?t=<TOKEN_FROM_aspire_ps>`（令牌每次启动都会变化，公开文档使用占位符）。
+
+2. 单元测试（未停止 eShop）：
+
+```bash
+cd /workspace/eShop
+dotnet test tests/Ordering.UnitTests/Ordering.UnitTests.csproj --no-progress --verbosity minimal
+```
+
+结果：通过，退出码 0。
+
+```text
+Test run summary: Passed!
+  total: 43
+  failed: 0
+  succeeded: 43
+  skipped: 0
+  duration: 1s 116ms
+```
+
+未运行 FunctionalTests 与 Playwright，以免与正在演示的编排争用 Docker 资源或浏览器会话。
+
+### 字数统计
+
+统计规则：中文字符（CJK 统一汉字）+ 英文单词（拉丁字母词）。代码块指 Markdown 围栏 ` ``` ` 内的内容。
+
+| 范围 | 中文字符 | 英文单词 | 合计 |
+| --- | ---: | ---: | ---: |
+| 正文（不含代码块） | 16665 | 3082 | 19747 |
+| 代码块内 | 278 | 7815 | 8093 |
+| 全文（含代码块） | 16943 | 10972 | 27915 |
+
+正文合计 19747，落在 1 万到 2 万字要求内，且不含代码块已超过 1 万。代码围栏共 75 个，其中源码摘录（“摘自 `路径`”）70 处，另有目录树、mermaid 图、以及明确标注为“示例，非仓库代码”的新增服务示例、测试运行输出等。
+
+### 产出路径
+- `/workspace/eshop-docs/docs/architecture-v2.md`（主文档，v1 保留不动）
+- `/workspace/architecture-v2.md`（同内容副本）
+- 本步骤已追加到 `/workspace/eShop-steps.md`，并同步到 `/workspace/eshop-docs/docs/eShop-steps.md`（同步副本中的仪表板登录令牌替换为 `<TOKEN_FROM_aspire_ps>`）
+- 打包：`/workspace/eshop-docs-step5.tar.gz`（内含 `docs/architecture-v2.md`、`docs/eShop-steps.md`）
+
+**结果：架构设计 v2 已完成，未推送仓库 ✅**
