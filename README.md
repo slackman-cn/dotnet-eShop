@@ -36,12 +36,13 @@
 - **对照提交：** [`63ee8c086a69725c9ac5dbc3e7d8f9ce0dc00721`](https://github.com/ldumit/Articles/commit/63ee8c086a69725c9ac5dbc3e7d8f9ce0dc00721)（[All] Cleanup），分支 `master`
 - **项目定位：** 学术期刊的投稿、审稿相关微服务系统。
 - **技术栈（摘要）：** .NET 9（`net9.0`）；启动方式为 Docker Compose 中间件 + 各 API 在宿主机 `dotnet run`（不是 Aspire）。业务服务包括 Auth、Journals、ArticleHub、Submission、Review；Production 在上游 compose 中被注释，未纳入默认启动。中间件包括 SQL Server、Postgres、Redis Stack、MongoDB、RabbitMQ、Hasura。
-- **本地研究环境：** 源码检出在分析用 Linux 环境的 `/workspace/Articles`。Step 1 已在该环境跑通 5 个 API 与中间件，HTTP / Swagger 可访问。本仓库只保存文档、截图和本地覆盖配置，不保存 Articles 源码。
+- **本地研究环境：** 源码检出在分析用 Linux 环境的 `/workspace/Articles`。Step 1 已在该环境跑通 5 个 API 与中间件，HTTP / Swagger 可访问。Step 2 完成架构设计分析。本仓库只保存文档、截图和本地覆盖配置，不保存 Articles 源码。
 - **文档目录：** [github-Articles/](github-Articles/)
 
 ### 文档清单
 
-- [步骤记录](github-Articles/Articles-steps.md)：Step 1 尝试部署运行（命令、版本、结果、地址、问题）
+- [架构设计](github-Articles/architecture.md)：基于源码与 Step 1 实测的微服务架构分析（正文 17,753 字，70 段源码摘录）
+- [步骤记录](github-Articles/Articles-steps.md)：Step 1 尝试部署运行，Step 2 架构设计分析
 - [本地覆盖配置](github-Articles/docker-compose.local.yml)：修正上游 Postgres 健康检查与实际库名不一致的问题
 - [截图](github-Articles/screenshots/)：各 API 的 Swagger、Hasura Console、RabbitMQ 管理页
 - 目录说明见 [github-Articles/README.md](github-Articles/README.md)

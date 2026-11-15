@@ -191,3 +191,36 @@ docker rm -f articles-hasura   # 若使用了 host 网络的 Hasura
 **部署运行基本成功（部分组件）：** 中间件和 5 个核心 API（Auth、Journals、ArticleHub、Submission、Review）已在本机运行，Swagger 可打开，Auth 登录与 Journals 列表 API 已用种子管理员验证通过。Hasura 在改为 host 网络后健康检查正常。未启动 Production 与 ApiGateway。eShop 全程保持运行。
 
 **结果：Articles Step 1 已完成，未推送仓库 ✅**
+
+---
+
+## Step 2：架构设计分析（2026-11-15 10:42，Asia/Shanghai UTC+8）
+
+目标：基于真实源码撰写 Articles 的微服务架构设计分析，正文不少于 1 万字（中文字符 + 英文单词，不计代码块、不计纯路径/命令行），直接写成完整长文，不先出简短 v1。
+
+### 做了什么
+
+- 再次确认源码提交仍为 `63ee8c086a69725c9ac5dbc3e7d8f9ce0dc00721`（`master`），**未执行 `git pull`，未修改 `/workspace/Articles` 任何文件**。
+- 阅读 `github-Articles/Articles-steps.md`、`github-Articles/README.md`，以及上游 `src/Directory.Packages.props`、全部服务 `Program.cs` / 组成根、BuildingBlocks、Modules、集成事件与 gRPC 契约、compose、Dockerfile、appsettings（摘录时脱敏）。风格对照 eShop 的 `architecture-v2.md`。
+- **未重新部署，未停止** 仍在监听的 Articles API（4401–4405）与 Hasura（4493），也未停止 eShop Aspire。
+- 写成完整文档 [`architecture.md`](./architecture.md)，放入本目录，**不含 Articles 源码拷贝**。未提交、未推送 GitHub。
+
+### 依据与产出
+
+| 项 | 内容 |
+| --- | --- |
+| 源码 | `/workspace/Articles`，提交 `63ee8c086a69725c9ac5dbc3e7d8f9ce0dc00721` |
+| 输出路径 | `/workspace/github-Articles/architecture.md` |
+| 正文字数 | 17,753（中文字符 + 英文单词；不计代码块、不计纯路径/命令行） |
+| 是否 ≥ 10,000 | 是 |
+| 源码摘录 | 70 段，均带相对路径；配置中的 JWT 秘钥、库口令、Hasura Admin Secret、种子口令、Azure 存储密钥、SMTP 口令已替换为占位符 |
+| 结构 | 技术选型、项目框架、服务拆分、模块通信、认证授权、数据一致性/状态机/文件、配置与环境、开发、部署、测试、已知限制、模式总结与规划建议，另有三张 mermaid 图与附录文件清单 |
+
+### 从代码确认的主要结论（详见 architecture.md）
+
+- 按投稿生命周期拆分限界上下文；数据库每服务一份；同步点查走 gRPC，跨上下文状态变化走 MassTransit / RabbitMQ；ArticleHub 用 Hasura GraphQL 做读模型。
+- 不是 Aspire，目标框架一律 `net9.0`。HTTP 同时存在 FastEndpoints、Carter、手写 Minimal API 三种写法（教学仓库有意保留多样性）。
+- 仓库内**没有**测试项目和 CI 工作流，也**没有** OpenTelemetry / 健康检查端点；未启用 MassTransit Outbox。
+- Step 1 已记录的限制在文中保留：上游 Dockerfile 不适合直接构建、ApiGateway 端口表过时且默认未启动、`production-api` 在 compose 中被注释、Postgres 健康检查与真实用户/库不一致。
+
+**结果：Articles 架构分析文档已写完，未推送仓库。**
