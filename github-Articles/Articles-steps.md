@@ -250,3 +250,27 @@ docker rm -f articles-hasura   # 若使用了 host 网络的 Hasura
 - 端口、库名、Hasura 开关与上游 override 一致。
 
 **结果：Articles quickstart 已写完，未推送仓库。**
+
+---
+
+## Step 4：编写从零复现手册 quickstart-from-scratch（2026-11-15 11:11，Asia/Shanghai UTC+8）
+
+目标：纠正此前把 quickstart 写成「如何把现成仓库跑起来」的理解。新建 `quickstart-from-scratch.md`，按用户指定的 Step1–Step5，说明如何从空白目录复现 Articles（不是 `git clone` 后启动）。已有的 `quickstart.md` 保留，作为运行现成仓库的手册。
+
+### 做了什么
+
+- 再次确认源码提交仍为 `63ee8c086a69725c9ac5dbc3e7d8f9ce0dc00721`（`master`），未执行 `git pull`，未修改 `/workspace/Articles`，未停止正在运行的 5 个 API 与 eShop。
+- 核对 `src/Directory.Packages.props`、`src/Articles.sln`、各服务 csproj / Program.cs、compose，以及本机官方模板列表。第三方模板只记录能核对到来源的项：FastEndpoints.TemplatePack（README 短名称 `feproj`、`feintproj`、`fetest`、`feat`、`feaot`）；CarterTemplate 9.0.0（文档用法 `dotnet new carter`，安装后需再 `dotnet new list` 确认）。MassTransit、YARP、Hasura、Redis.OM 无适用官方解决方案模板。
+- 产出：
+  - `/workspace/github-Articles/quickstart-from-scratch.md`
+  - 更新 `/workspace/github-Articles/README.md`（加入新文档链接，并标明已有 `quickstart.md` 是「运行现成仓库」）
+- 未覆盖 `quickstart.md`，未改 `architecture.md`，未改仓库根 README，未提交、未推送 GitHub。
+
+### 手册要点
+
+- Step2 推荐：官方 `sln` + `webapi` / `classlib` / `xunit` 打底（TFM `net9.0`）。gRPC 用 `webapi` + `protobuf-net.Grpc`（代码优先），不用官方 `grpc` 模板当服务骨架。FastEndpoints / Carter 第三方模板仅可选用于单个 API。
+- Step3：上游没有测试项目，从零补 xUnit 选型测试；版本取自 `Directory.Packages.props`；用现有中间件 compose 验证 SQL Server、Postgres、Redis Stack、Mongo/GridFS、MassTransit/RabbitMQ、gRPC、JWT、FastEndpoints、Carter、Hasura healthz。
+- Step4 DevOps：明确写出上游没有 CI，并给出建议新增的最小 GitHub Actions（`dotnet restore/build/test`，`9.0.x`）。
+- Step5：按 architecture.md，顺序为 Auth → Journals → gRPC 契约 → Submission → Review → ArticleHub →（可选）Production → ApiGateway。
+
+**结果：Articles 从零复现手册已写完，未推送仓库。**

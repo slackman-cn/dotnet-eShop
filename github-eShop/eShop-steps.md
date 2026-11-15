@@ -877,3 +877,29 @@ aspire ps --non-interactive --nologo
 - 文档明确：Aspire 也会拉起这些容器并使用随机主机端口与自生成连接串；自备 compose 会与 5432 / 6379 / 5672 冲突，默认实践仍是只跑 `aspire run`。
 
 **结果：eShop quickstart 已写完，未推送仓库。**
+
+---
+
+## Step 10：编写从零复现手册 quickstart-from-scratch（2026-11-15 11:11，Asia/Shanghai UTC+8）
+
+目标：纠正此前把 quickstart 写成「如何把现成仓库跑起来」的理解。新建 `quickstart-from-scratch.md`，按用户指定的 Step1–Step5，说明如何从空白目录复现 eShop（不是 `git clone` 后启动）。已有的 `quickstart.md` 保留，作为运行现成仓库的手册。
+
+### 做了什么
+
+- 再次确认源码提交仍为 `913acea66708a59595351174cee9b29f37179d29`（`main`），未执行 `git pull`，未修改 `/workspace/eShop`，未停止正在运行的 Aspire 资源。
+- 核对 `global.json`、`Directory.Packages.props`、测试项目（单元测试 `MSTest.Sdk` 4.0.2，功能测试 `xunit.v3.mtp-v2` 3.2.2 + Aspire AppHost SDK）、`.github/workflows`（`pr-validation.yml`、`playwright.yml`、`pr-validation-maui.yml`、`markdownlint.yml`），以及本机 `dotnet new list` / `aspire new --help`。
+- 第三方模板只记录了能核对到来源的项：`Aspire.ProjectTemplates` / `aspire new`（本机 CLI 13.6.5 列出 `aspire-empty`、`aspire-starter` 等）；`Duende.Templates`（官方文档短名称含 `duende-is-aspid` 等，模板目标框架为 .NET 8）。未把未经 `dotnet new list` 确认的短名称写进命令。MassTransit / YARP 无适用官方模板。
+- 产出：
+  - `/workspace/github-eShop/quickstart-from-scratch.md`
+  - 更新 `/workspace/github-eShop/README.md`（加入新文档链接，并标明已有 `quickstart.md` 是「运行现成仓库」）
+  - 同步更新 `/workspace/eShop-steps.md` 与 `/workspace/github-eShop/eShop-steps.md`
+- 未覆盖 `quickstart.md`，未改架构长文，未改仓库根 README，未提交、未推送 GitHub。
+
+### 手册要点
+
+- Step2 推荐：`aspire new aspire-empty --version 13.6.0` 打底，再用官方 `webapi` / `grpc` / `blazor` / `worker` / `classlib` / `mstest` 补齐服务；Duende 模板仅作身份对照，不假设上游由它生成。
+- Step3：新建 MSTest 选型测试项目，版本取自 `Directory.Packages.props`；用已有中间件 compose 验证 EF+Postgres/pgvector、Redis、RabbitMQ、gRPC、JWT、MediatR。上游没有 Testcontainers。
+- Step4 DevOps：按上游已有的 `pr-validation.yml` 写 restore/build/test；Playwright / MAUI 后补。
+- Step5：按 architecture-v2 的限界上下文，顺序为 Identity → Catalog → Basket → Ordering → 处理机 → Webhooks → WebApp → mobile-bff。
+
+**结果：eShop 从零复现手册已写完，未推送仓库。**
