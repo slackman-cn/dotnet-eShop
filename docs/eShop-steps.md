@@ -775,3 +775,41 @@ Test run summary: Passed!
 - 打包：`/workspace/eshop-docs-step5.tar.gz`（内含 `docs/architecture-v2.md`、`docs/eShop-steps.md`）
 
 **结果：架构设计 v2 已完成，未推送仓库 ✅**
+
+---
+
+## Step 6：Serverless / FaaS / BaaS 可行性对比（2026-11-15，Asia/Tokyo）
+
+用户提问：这个项目是否可以改成 Serverless 架构（FaaS、BaaS），对比现在的技术方案有什么优势。本文基于已有源码分析与架构文档（v1 / v2，源码提交 `913acea66708a59595351174cee9b29f37179d29`）作评估，未编造新的源码细节，未停止正在运行的 eShop，未向 GitHub 推送，也未执行云部署。
+
+### 做了什么
+- 核对 AppHost 仍在运行（`aspire ps`，未执行 `aspire stop`）。
+- 依据 `docs/architecture-v2.md`、`docs/architecture.md` 及既有源码结论，撰写中文对比文档，覆盖概念界定、逐服务可迁移性、优劣势对比和三条改造路径。
+- 文档中的演示密钥、仪表板令牌均未写入；结论明确推荐混合路径 B。
+
+### 运行的命令与结果
+
+```bash
+export PATH="$HOME/.aspire/bin:$HOME/.dotnet:$HOME/.dotnet/tools:/usr/local/bin:$PATH"
+aspire ps --non-interactive --nologo
+```
+
+结果：AppHost `eShop.AppHost.csproj` 仍为 `running`，SDK 13.6.0，Dashboard 位于 `https://localhost:19888/login?t=<TOKEN_FROM_aspire_ps>`。未重启、未停止任何资源。
+
+### 字数统计
+
+统计规则与 Step 5 相同：中文字符 + 英文单词。本文无代码围栏。
+
+| 范围 | 中文字符 | 英文单词 | 合计 |
+| --- | ---: | ---: | ---: |
+| 正文 / 全文 | 6449 | 707 | 7156 |
+
+落在 4000–8000 字目标范围内。
+
+### 产出路径
+- `/workspace/eshop-docs/docs/serverless-faas-baas.md`（主文档）
+- `/workspace/serverless-faas-baas.md`（同内容副本）
+- 本步骤已追加到 `/workspace/eShop-steps.md`，并同步到 `/workspace/eshop-docs/docs/eShop-steps.md`（仪表板令牌替换为 `<TOKEN_FROM_aspire_ps>`）
+- 打包：`/workspace/eshop-docs-step6.tar.gz`（内含 `docs/serverless-faas-baas.md`、`docs/eShop-steps.md`）
+
+**结果：Serverless 对比文档已完成，未推送仓库 ✅**
