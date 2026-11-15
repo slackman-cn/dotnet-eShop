@@ -853,3 +853,27 @@ aspire ps --non-interactive --nologo
 - 本步骤已追加到 `/workspace/eShop-steps.md`
 
 **结果：目录调整与 README 项目信息已准备提交。**
+
+---
+
+## Step 9：编写从零搭建 quickstart（2026-11-15 10:54，Asia/Shanghai UTC+8）
+
+目标：为 eShop 写一份从零搭建的操作手册。开头用 docker-compose 列出全部中间件，并写清开发环境与 IDE。官方启动路径仍是 Aspire，不能写成 `docker compose up` 全栈。
+
+### 做了什么
+
+- 再次确认源码提交仍为 `913acea66708a59595351174cee9b29f37179d29`（`main`），未执行 `git pull`，未修改 `/workspace/eShop`，未停止正在运行的 Aspire 资源。
+- 对照上游 README（必备条件与 Optional IDE）、`global.json`、`aspire.config.json`、`AppHost.cs` 中间件声明，以及本步骤记录中已验证的版本与地址。
+- 产出：
+  - `/workspace/github-eShop/quickstart.md`
+  - `/workspace/github-eShop/docker-compose.middleware.yml`（仅 Postgres+pgvector、Redis、RabbitMQ）
+  - `/workspace/github-eShop/docker-compose.middleware.init.sql`（创建 `catalogdb` / `identitydb` / `orderingdb` / `webhooksdb`）
+  - 更新 `/workspace/github-eShop/README.md`（加入 quickstart 与 compose 链接）
+- 未提交、未推送 GitHub，未改架构长文，未改仓库根 README。
+
+### 中间件合约要点
+
+- 镜像：`ankane/pgvector:latest` 来自 AppHost 的 `WithImage` / `WithImageTag`；`redis:8.6` 与 `rabbitmq:4.3` 来自本机 Step 1 实测（代码未钉这两个镜像）。
+- 文档明确：Aspire 也会拉起这些容器并使用随机主机端口与自生成连接串；自备 compose 会与 5432 / 6379 / 5672 冲突，默认实践仍是只跑 `aspire run`。
+
+**结果：eShop quickstart 已写完，未推送仓库。**

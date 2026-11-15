@@ -1,0 +1,63 @@
+# eShop 中间件只读合约（不是官方启动方式）。
+# 官方本地启动是仓库根目录的 `aspire run` / `aspire start`，由 AppHost 拉起这些容器并注入连接串。
+# 本文件只覆盖中间件：Postgres+pgvector、Redis、RabbitMQ。不要把业务服务放进这份 compose。
+#
+# 镜像来源：
+#   postgres  → AppHost 明确指定 ankane/pgvector:latest
+#   redis     → 代码未钉镜像；本机 Step 1 实测 Aspire.Hosting.Redis 13.6.0 拉到 redis:8.6
+#   eventbus  → 代码未钉镜像；本机 Step 1 实测 Aspire.Hosting.RabbitMQ 拉到 rabbitmq:4.3
+#
+# 使用前请把 <DEV_DB_PASSWORD> 替换为本地开发口令。
+# 若本机已有 Aspire 或其他项目占用 5432 / 6379 / 5672，请改端口或先停冲突容器，
+# 并把连接串改成与本文件一致。默认实践仍建议只用 Aspire，不要同时再启这份 compose。
+
+services:
+  postgres:
+    image: ankane/pgvector:latest
+    container_name: eshop-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "<DEV_DB_PASSWORD>"
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - eshop-postgres-data:/var/lib/postgresql/data
+      - ./docker-compose.middleware.init.sql:/docker-entrypoint-initdb.d/01-databases.sql:ro
+    healthcheck:
+      # AppHost 未提供 compose 健康检查；这是为独立启动本文件而加的标准探测。
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:8.6
+    container_name: eshop-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - eshop-redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  eventbus:
+    image: rabbitmq:4.3
+    container_name: eshop-eventbus
+    ports:
+      - "5672:5672"
+    volumes:
+      - eshop-rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  eshop-postgres-data:
+  eshop-redis-data:
+  eshop-rabbitmq-data:

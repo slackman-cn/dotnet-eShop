@@ -23,7 +23,9 @@
 
 ### 文档清单
 
-- [步骤记录](github-eShop/eShop-steps.md)：Step 1 环境搭建、Step 2 项目结构 / 依赖 / 中间件分析、Step 3 Aspire 本地部署、Step 4 架构设计研究、Step 5 架构设计 v2、Step 6 Serverless 可行性对比、Step 7 决定维持微服务架构、Step 8 将文档目录改为 `github-eShop`，以及附录
+- [从零搭建 Quickstart](github-eShop/quickstart.md)：开发环境、IDE、中间件 docker-compose 合约，以及用 Aspire 从零启动与验证
+- [中间件 docker-compose 合约](github-eShop/docker-compose.middleware.yml)：仅含 Postgres + pgvector、Redis、RabbitMQ（配 [初始化脚本](github-eShop/docker-compose.middleware.init.sql)）；官方启动路径仍是 Aspire
+- [步骤记录](github-eShop/eShop-steps.md)：Step 1 环境搭建、Step 2 项目结构 / 依赖 / 中间件分析、Step 3 Aspire 本地部署、Step 4 架构设计研究、Step 5 架构设计 v2、Step 6 Serverless 可行性对比、Step 7 决定维持微服务架构、Step 8 将文档目录改为 `github-eShop`、Step 9 编写 quickstart，以及附录
 - [架构设计](github-eShop/architecture.md)：按真实项目规划口径整理的微服务 / 云原生参考架构说明
 - [架构设计 v2（详细版）](github-eShop/architecture-v2.md)：在 v1 结论上展开技术选型、服务拆分、通信与可靠性、开发部署与测试
 - [架构改造：Serverless / FaaS / BaaS 对比](github-eShop/serverless-faas-baas.md)：评估现有微服务能否改为 Serverless。已决定不采用，文档仅作评估记录保留
@@ -41,8 +43,9 @@
 
 ### 文档清单
 
+- [从零搭建 Quickstart](github-Articles/quickstart.md)：开发环境、IDE、中间件 docker-compose，以及用 Compose + `dotnet run` 从零启动 5 个 API
 - [架构设计](github-Articles/architecture.md)：基于源码与 Step 1 实测的微服务架构分析（正文 17,753 字，70 段源码摘录）
-- [步骤记录](github-Articles/Articles-steps.md)：Step 1 尝试部署运行，Step 2 架构设计分析
-- [本地覆盖配置](github-Articles/docker-compose.local.yml)：修正上游 Postgres 健康检查与实际库名不一致的问题
+- [步骤记录](github-Articles/Articles-steps.md)：Step 1 尝试部署运行，Step 2 架构设计分析，Step 3 编写 quickstart
+- [本地覆盖配置](github-Articles/docker-compose.local.yml)：叠加在上游 compose 上的 Postgres 健康检查覆盖
 - [截图](github-Articles/screenshots/)：各 API 的 Swagger、Hasura Console、RabbitMQ 管理页
 - 目录说明见 [github-Articles/README.md](github-Articles/README.md)

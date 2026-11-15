@@ -1,8 +1,11 @@
-# 仅用于本机部署尝试，不修改上游仓库文件。
+# 仅用于叠加在上游 src/docker-compose.yml + docker-compose.override.yml 上，
+# 不修改上游仓库文件。完整的“从零搭建、只跑中间件”说明见同目录 quickstart.md。
+#
 # 上游 docker-compose.yml 中 Postgres 健康检查为：
 #   pg_isready -U app -d articles
 # 与 docker-compose.override.yml 中的 POSTGRES_USER=postgres、POSTGRES_DB=ArticleHubDb 不一致，
-# 若用 compose 启动 articleHub-api，会因一直等不到 healthy 而卡住。
+# 若用 compose 启动依赖 postgres healthy 的服务，会一直等不到。
+# 本文件只覆盖这一处检查，与 quickstart.md 中建议的完整中间件 YAML 保持一致。
 services:
   postgres:
     healthcheck:

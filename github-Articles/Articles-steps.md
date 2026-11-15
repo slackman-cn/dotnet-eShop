@@ -224,3 +224,29 @@ docker rm -f articles-hasura   # 若使用了 host 网络的 Hasura
 - Step 1 已记录的限制在文中保留：上游 Dockerfile 不适合直接构建、ApiGateway 端口表过时且默认未启动、`production-api` 在 compose 中被注释、Postgres 健康检查与真实用户/库不一致。
 
 **结果：Articles 架构分析文档已写完，未推送仓库。**
+
+---
+
+## Step 3：编写从零搭建 quickstart（2026-11-15 10:54，Asia/Shanghai UTC+8）
+
+目标：为 Articles 写一份从零搭建的操作手册。开头用 docker-compose 列出全部中间件，并写清开发环境与 IDE。启动路径仍是 Compose 拉中间件 + 宿主机 `dotnet run` 起 5 个 API。
+
+### 做了什么
+
+- 再次确认源码提交仍为 `63ee8c086a69725c9ac5dbc3e7d8f9ce0dc00721`（`master`），未执行 `git pull`，未修改 `/workspace/Articles`，未停止正在运行的 API 与 eShop。
+- 对照上游 `src/docker-compose.yml`、`docker-compose.override.yml`、本目录 `docker-compose.local.yml`、各 API 的 launchSettings / appsettings（摘录脱敏），以及 Step 1 已验证的命令与地址。
+- 产出：
+  - `/workspace/github-Articles/quickstart.md`
+  - 更新 `/workspace/github-Articles/docker-compose.local.yml`（仍只覆盖 Postgres 健康检查，补充与 quickstart 保持一致的说明注释）
+  - 更新 `/workspace/github-Articles/README.md`（加入 quickstart 链接）
+- 未再复制一份完整中间件 compose 文件，以免与 `docker-compose.local.yml` 漂移；完整可读 YAML 写在 quickstart 正文中，健康检查与覆盖文件一致。
+- 未提交、未推送 GitHub，未改 architecture.md，未改仓库根 README。
+
+### 与上游 compose 的主要差异（见 quickstart）
+
+- 建议的本地 YAML 只含中间件，不含业务 API。
+- Postgres 健康检查改为 `pg_isready -U postgres -d ArticleHubDb`。
+- 不挂 `${APPDATA}` 卷；不包含已注释的 `production-api` 与 `hasura-init`。
+- 端口、库名、Hasura 开关与上游 override 一致。
+
+**结果：Articles quickstart 已写完，未推送仓库。**
