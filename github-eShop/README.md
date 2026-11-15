@@ -16,6 +16,7 @@
 
 - [quickstart.md](./quickstart.md)：如何把**现成仓库**跑起来（开发环境、IDE、中间件 compose 合约、Aspire 启动与验证）
 - [quickstart-from-scratch.md](./quickstart-from-scratch.md)：从空白目录**复现** eShop（Step1 环境 → Step2 官方/第三方模板建项目 → Step3 测试验证技术选型 → Step4 整体结构与 DevOps → Step5 按功能模块做 MVP）
+- [quickstart-from-scratch-v2.md](./quickstart-from-scratch-v2.md)：从空目录创建并跑通的独立手册（v2，约 2.5 万字；含完整架构、数据结构、流程图与状态图，不依赖其他文档）
 - [docker-compose.middleware.yml](./docker-compose.middleware.yml)：仅含中间件的独立 compose 合约（配 [docker-compose.middleware.init.sql](./docker-compose.middleware.init.sql)）
 - [eShop-steps.md](./eShop-steps.md)：分步记录（命令、版本、结果、地址、问题）
 - [architecture.md](./architecture.md)：架构设计（v1）

@@ -25,6 +25,7 @@
 
 - [从零搭建 Quickstart](github-eShop/quickstart.md)：如何把现成仓库跑起来（开发环境、IDE、中间件 compose 合约、Aspire 启动与验证）
 - [从零复现手册](github-eShop/quickstart-from-scratch.md)：不克隆上游，按 Step1–Step5 从空白目录复现（环境、模板建项目、测试验证技术选型、整体结构与 DevOps、按模块做 MVP）
+- [从零复现手册 v2](github-eShop/quickstart-from-scratch-v2.md)：从空目录创建并跑通的独立手册（v2，约 2.5 万字；含完整架构、数据结构、流程图与状态图，不依赖其他文档）
 - [中间件 docker-compose 合约](github-eShop/docker-compose.middleware.yml)：仅含 Postgres + pgvector、Redis、RabbitMQ（配 [初始化脚本](github-eShop/docker-compose.middleware.init.sql)）；官方启动路径仍是 Aspire
 - [步骤记录](github-eShop/eShop-steps.md)：Step 1 环境搭建、Step 2 项目结构 / 依赖 / 中间件分析、Step 3 Aspire 本地部署、Step 4 架构设计研究、Step 5 架构设计 v2、Step 6 Serverless 可行性对比、Step 7 决定维持微服务架构、Step 8 将文档目录改为 `github-eShop`、Step 9 编写 quickstart、Step 10 编写从零复现手册，以及附录
 - [架构设计](github-eShop/architecture.md)：按真实项目规划口径整理的微服务 / 云原生参考架构说明
@@ -46,6 +47,7 @@
 
 - [从零搭建 Quickstart](github-Articles/quickstart.md)：如何把现成仓库跑起来（开发环境、IDE、中间件 compose、宿主机启动 5 个 API）
 - [从零复现手册](github-Articles/quickstart-from-scratch.md)：不克隆上游，按 Step1–Step5 从空白目录复现（环境、模板建项目、测试验证技术选型、整体结构与建议补上的 CI、按模块做 MVP）
+- [从零复现手册 v2](github-Articles/quickstart-from-scratch-v2.md)：从空目录创建并跑通的独立手册（v2，约 2 万字；含完整架构、数据结构、流程图与状态图，不依赖其他文档）
 - [架构设计](github-Articles/architecture.md)：基于源码与 Step 1 实测的微服务架构分析（正文 17,753 字，70 段源码摘录）
 - [步骤记录](github-Articles/Articles-steps.md)：Step 1 尝试部署运行，Step 2 架构设计分析，Step 3 编写 quickstart，Step 4 编写从零复现手册
 - [本地覆盖配置](github-Articles/docker-compose.local.yml)：叠加在上游 compose 上的 Postgres 健康检查覆盖

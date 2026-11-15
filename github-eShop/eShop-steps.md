@@ -903,3 +903,26 @@ aspire ps --non-interactive --nologo
 - Step5：按 architecture-v2 的限界上下文，顺序为 Identity → Catalog → Basket → Ordering → 处理机 → Webhooks → WebApp → mobile-bff。
 
 **结果：eShop 从零复现手册已写完，未推送仓库。**
+
+---
+
+## Step 11：编写从零创建与跑通手册 quickstart-from-scratch-v2（2026-11-15 11:47，Asia/Shanghai UTC+8）
+
+目标：v1 从零复现手册过于精简。新建独立文档 `quickstart-from-scratch-v2.md`，按手册即可从空目录创建项目并跑通；架构设计作为核心，补全数据结构、流程图和状态图；具体业务实现从简。文档自包含，不引用其他文档，也不对照现成仓库的实现细节。
+
+### 做了什么
+
+- 先确定目录（第 0–10 章及附录 A/B/C），再按目录写完全文。
+- 字数统计方法：中文字符 + 英文单词，排除围栏代码块以及不含中文的纯路径/命令行。本文约 24,796 字。
+- 文中含 11 张 mermaid 图：逻辑架构、数据归属、目录 ER、订单 ER、全系统数据模型、登录时序、加购流程、下单时序、订单状态机、宽限期与支付协作、出盒投递。
+- 产出：
+  - `github-eShop/quickstart-from-scratch-v2.md`
+  - 更新 `github-eShop/README.md`（加入 v2 链接）
+- 未覆盖 `quickstart.md` 与 `quickstart-from-scratch.md`，未改架构长文、compose、截图和脚本，未修改 eShop 源码，未停止正在运行的服务。
+
+### 手册要点
+
+- 第 1 章给出完整中间件 docker-compose 与初始化脚本；第 2、5、6、7 章写全架构、数据、流程与状态；第 3、4 章从空目录建解决方案并用测试验证选型；第 8–10 章落地最小可运行切片并给出启动命令与验收清单。
+- 密钥使用占位符；RabbitMQ 的 `guest`/`guest` 仅标明为本机开发默认。
+
+**结果：eShop from-scratch-v2 已写完，准备提交仓库。**

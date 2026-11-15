@@ -274,3 +274,26 @@ docker rm -f articles-hasura   # 若使用了 host 网络的 Hasura
 - Step5：按 architecture.md，顺序为 Auth → Journals → gRPC 契约 → Submission → Review → ArticleHub →（可选）Production → ApiGateway。
 
 **结果：Articles 从零复现手册已写完，未推送仓库。**
+
+---
+
+## Step 5：编写从零创建与跑通手册 quickstart-from-scratch-v2（2026-11-15 11:47，Asia/Shanghai UTC+8）
+
+目标：v1 从零复现手册过于精简。新建独立文档 `quickstart-from-scratch-v2.md`，按手册即可从空目录创建项目并跑通；架构设计作为核心，补全数据结构、流程图和状态图；具体业务实现从简。文档自包含，不引用其他文档，也不对照现成仓库的实现细节。
+
+### 做了什么
+
+- 先确定目录（第 0–10 章及附录 A/B/C），再按目录写完全文。
+- 字数统计方法：中文字符 + 英文单词，排除围栏代码块以及不含中文的纯路径/命令行。本文约 20,074 字。
+- 文中含 11 张 mermaid 图：逻辑架构、数据归属、投稿 ER、全系统数据模型、登录时序、创建并投递稿件、文件跨上下文拷贝、投稿状态机、审稿状态机、生产状态机、领域事件到集成事件的桥接。
+- 产出：
+  - `github-Articles/quickstart-from-scratch-v2.md`
+  - 更新 `github-Articles/README.md`（加入 v2 链接与 Step 5 结论）
+- 未覆盖 `quickstart.md`、`quickstart-from-scratch.md` 与 `architecture.md`，未改 compose 与截图，未修改 Articles 源码，未停止正在运行的服务。
+
+### 手册要点
+
+- 第 1 章给出完整中间件 docker-compose；第 2、5、6、7 章写全架构、数据、流程与状态；第 3、4 章从空目录建解决方案并用测试验证选型；第 8–10 章落地最小可运行切片（登录 → 期刊 → 投稿 → 审稿），生产与网关设计写全但最小切片可暂不启动。
+- 从零补上最小 CI，完整 YAML 写在正文。密钥使用占位符；RabbitMQ 的 `guest`/`guest` 仅标明为本机开发默认。
+
+**结果：Articles from-scratch-v2 已写完，准备提交仓库。**
