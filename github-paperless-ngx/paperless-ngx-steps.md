@@ -56,3 +56,38 @@ git clone --depth 1 https://github.com/paperless-ngx/paperless-ngx.git /workspac
 - 官方 compose 模板共 8 个 yml（含 Portainer 与 CI 测试专用文件）。
 
 **结果：分析文档已写完，未启动服务，未推送仓库。**
+
+---
+
+## Step 3：本机部署并运行（2026-11-15 16:50，Asia/Shanghai UTC+8）
+
+目标：在本机用官方 Postgres + Tika + Gotenberg Compose 把 paperless-ngx 跑起来，单独写成部署文档，服务保持运行。不修改、不停止已经在跑的 eShop Aspire 与 Articles 中间件；不把源码或真实密钥写入文档目录；本步不提交、不推送仓库。
+
+详细过程、脱敏后的 compose / env、端口对照、镜像摘要、截图和排障见 [deploy.md](./deploy.md)。下文只记结论。
+
+### 做了什么
+
+- 运行目录：`/workspace/paperless-ngx-run/`（从官方 `docker/compose/docker-compose.postgres-tika.yml`、`docker-compose.env`、`.env` 拷出）。源码检出 `/workspace/paperless-ngx` 保持干净，HEAD 仍为 `4610171a94e5932e85a80e480032e397cdb6f309`。
+- 生成真实的 `PAPERLESS_SECRET_KEY`、数据库口令和首次管理员口令，只保存在运行目录；文档中写 `<PAPERLESS_SECRET_KEY>`、`<DEV_DB_PASSWORD>`、`<SEED_ADMIN_PASSWORD>`。
+- 设置 `PAPERLESS_TIME_ZONE=Asia/Shanghai`。曾尝试 `PAPERLESS_OCR_LANGUAGE=chi_sim+eng` / `PAPERLESS_OCR_LANGUAGES=chi_sim`，镜像源没有 `tesseract-ocr-chi_sim` 软件包，系统检查失败导致 webserver 重启循环，已回退为 `eng`（镜像自带 deu/eng/fra/ita/osd/spa）。
+- `docker compose pull && docker compose up -d`。宿主只发布 `8000:8000`（启动前空闲，未改 8010）。paperless 的 Postgres / Valkey 端口仅在 compose 网络内部，与 Articles 已发布的宿主 5432 / 6379 以及 eShop 高位端口无冲突；事后复查这些容器仍在运行。
+- 第一次启动时 webserver 连不上 `db:5432` 和 `broker:6379`。原因是本机 iptables-legacy 的 FORWARD 策略为 DROP，与 Docker 29 的 nft 规则并存，网桥内容器互访被丢掉。只对 `paperless_default` 网桥 `br-35184e2f2b3b` 在 legacy 的 `DOCKER-USER` 链放行后恢复互通，然后重建 webserver。该规则宿主机重启后需按当时网桥名重加。
+- webserver 于 16:47:29 变为 healthy。应用日志：Paperless-ngx v3.4.2，Granian 监听 8000。管理员 `admin` 由 `PAPERLESS_ADMIN_*` 在首次成功启动时创建（`Created superuser "admin" with provided password.`），并用 `manage.py` 核对存在。
+- `curl`：`/` 返回 302 到 `/accounts/login/?next=/`；登录页 HTTP 200，标题 *Paperless-ngx sign in*。用 `DISPLAY=:11` 上的有界面 Playwright Chromium 打开登录页并登录，截图见 `screenshots/01-login.png`、`screenshots/02-dashboard.png`（空仪表盘，Total documents: 0，截图早于冒烟文件）。
+- 向 `consume/smoke-test.pdf` 投放 594 字节最小 PDF，16:48:40 消费完成，数据库中有 1 篇 `smoke-test.pdf`。OCR 阶段有 “page already has text” 和 “Too few characters” 日志，未挡住入库。
+
+### 运行中的镜像
+
+- `ghcr.io/paperless-ngx/paperless-ngx:latest`（v3.4.2），`sha256:d704e84f88300eb6ab001ab15720a2330ff99169cf9f94d6b8fcc44b63a84c84`
+- `postgres:18`（容器内 18.7），`sha256:2ea8630df176ad090ec92136dee850397c5af8781e4bcf2e4162593691c61bbc`
+- `valkey/valkey:9-alpine`（9.1.3），`sha256:bf09d58e96d6b4524a15396b65b242bbe18beebbcc15a04d8ee75ddac62fae0b`
+- `gotenberg/gotenberg:8.38`，`sha256:aa552cc115db488e0f0bcb07446aac13071ad51505b642c84bb894500907b42b`
+- `apache/tika:3.3.1.0`，`sha256:90b7fa1dc018434075fce9e1d9b88b1e3d0ea6979d0cf86e116c79a8073ae973`
+
+### 产出
+
+- `/workspace/github-paperless-ngx/deploy.md`：独立的本机部署与运行记录
+- `/workspace/github-paperless-ngx/screenshots/01-login.png`、`02-dashboard.png`
+- 本文件追加 Step 3；`README.md` 增加 deploy.md 与 Step 3 结论
+
+**结果：服务保持运行，URL 为 http://127.0.0.1:8000/ 。未改 eShop / Articles，未提交、未推送。**

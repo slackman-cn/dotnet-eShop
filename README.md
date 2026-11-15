@@ -61,11 +61,13 @@
 - **对照提交：** [`4610171a94e5932e85a80e480032e397cdb6f309`](https://github.com/paperless-ngx/paperless-ngx/commit/4610171a94e5932e85a80e480032e397cdb6f309)（Chore (dev): add tsconfig missing types），分支 `dev`
 - **项目定位：** 文档管理系统，负责文档摄入、OCR、分类、全文检索、邮件收件和 Web 管理界面。
 - **技术栈（摘要）：** Python ≥ 3.11、Django 5.2、Celery、Granian ASGI；前端 Angular 22（`src-ui`，pnpm）。中间件为 Valkey（Redis 兼容）、Postgres 18 / MariaDB 12 / SQLite，可选 Apache Tika 与 Gotenberg。应用容器内同时运行 Web、Celery worker/beat 和消费目录监视进程。
-- **本地研究环境：** 已在分析用 Linux 环境浅克隆，尚未在本机部署运行。Step 2 完成仓库分析。本仓库只保存文档，不保存 paperless-ngx 源码。
+- **本地研究环境：** 已在分析用 Linux 环境浅克隆，并完成本机部署（官方 Postgres + Tika + Gotenberg Compose）。Web 为 http://127.0.0.1:8000/ ，镜像版本 v3.4.2，服务保持运行。本仓库只保存文档和截图，不保存 paperless-ngx 源码与密钥。
 - **文档目录：** [github-paperless-ngx/](github-paperless-ngx/)
 
 ### 文档清单
 
 - [仓库分析](github-paperless-ngx/analysis.md)：项目结构、依赖、中间件、进程模型、启动命令、部署与配置、数据流
-- [步骤记录](github-paperless-ngx/paperless-ngx-steps.md)：Step 1 下载代码，Step 2 仓库分析
+- [本机部署与运行](github-paperless-ngx/deploy.md)：独立部署记录（环境、Compose、端口、镜像、管理员、验证、实际问题）
+- [步骤记录](github-paperless-ngx/paperless-ngx-steps.md)：Step 1 下载代码，Step 2 仓库分析，Step 3 本机部署运行
+- [截图](github-paperless-ngx/screenshots/)：登录页与仪表盘
 - 目录说明见 [github-paperless-ngx/README.md](github-paperless-ngx/README.md)

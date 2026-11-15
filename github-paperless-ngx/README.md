@@ -14,8 +14,11 @@
 | 主要启动路径 | Docker Compose（`docker/compose/`）；也可使用官方安装脚本 `install-paperless-ngx.sh` 或文档中的裸机 / 开发方式 |
 | Step 1 结论 | 已浅克隆到本机，未把源码提交进分析仓库，未在本机部署运行 |
 | Step 2 结论 | 已完成仓库分析文档（`analysis.md`）；未改源码，未启动服务，未推送 GitHub |
+| Step 3 结论 | 已在本机用官方 Postgres + Tika + Gotenberg Compose 部署并保持运行；Web 为 http://127.0.0.1:8000/ ，版本 v3.4.2，管理员用户名为 `admin`。详细过程见 `deploy.md`。未改 eShop / Articles，未把源码或密钥写入本目录 |
 
 ## 文档
 
 - [analysis.md](./analysis.md)：仓库分析（结构、依赖、中间件、进程模型、启动命令、部署与配置、数据流）
+- [deploy.md](./deploy.md)：本机部署与运行记录（独立文档：环境、Compose、端口、镜像、管理员、验证、截图、实际问题）
+- [screenshots/01-login.png](./screenshots/01-login.png)、[screenshots/02-dashboard.png](./screenshots/02-dashboard.png)：登录页与空仪表盘截图
 - [paperless-ngx-steps.md](./paperless-ngx-steps.md)：分步记录（命令、版本、结果、限制）
