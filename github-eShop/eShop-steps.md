@@ -835,3 +835,21 @@ aspire ps --non-interactive --nologo
 - 本步骤已追加到 `/workspace/eShop-steps.md`，并同步到 `/workspace/eshop-docs/docs/eShop-steps.md`
 
 **结果：决策已记录，准备提交仓库。**
+
+---
+
+## Step 8：将文档目录 `docs` 改为 `github-eShop`（2026-11-15，Asia/Shanghai）
+
+用户要求：把仓库中的 `docs` 目录改名为 `github-eShop`，因为后续还会分析其他 .NET 项目；并在根目录 `README.md` 中记录本项目信息。
+
+### 做了什么
+- 将 GitHub 仓库 `slackman-cn/dotnet-eShop` 中的 `docs/` 重命名为 `github-eShop/`（`git mv docs github-eShop`，以保留历史）。
+- 重写根目录 `README.md`：说明本仓库将收录多个 .NET 项目的分析文档；用表格索引当前项目；详细记录 eShop 的上游地址、对照提交、技术栈、架构决策和文档清单。
+- 此前步骤记录中出现的 `docs/` 路径视为更名之前的历史写法，不回溯改写；自本步骤起，仓库内文档路径以 `github-eShop/` 为准。
+
+### 产出路径
+- 仓库根目录 `README.md`
+- `github-eShop/`（原 `docs/` 下全部文件）
+- 本步骤已追加到 `/workspace/eShop-steps.md`
+
+**结果：目录调整与 README 项目信息已准备提交。**
