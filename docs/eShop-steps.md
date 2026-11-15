@@ -665,3 +665,49 @@ aspire ps
 - 查询登录地址：`aspire ps`（在 /workspace/eShop 下），Dashboard 列显示 `https://localhost:19888/login?t=<token>`。token 每次启动 AppHost 都会变。
 - 打开方式：`/workspace/pw-dashboard.js`（与 pw-open.js 相同，只是把地址换成仪表板登录链接），命令为 `DISPLAY=:11 NODE_PATH=$(pwd)/node_modules nohup node /workspace/pw-dashboard.js > /workspace/pw-dashboard.log 2>&1 &`。PID 为 210637，关闭用 `kill 210637`。
 - 结果：桌面上出现第二个 Chromium 窗口，已登录 eShop 仪表板，能看到 Resources、Parameters、Graph 三个视图。
+
+## 附：文档提交到 GitHub 仓库（2026-11-15 09:37 JST）
+
+- 从现在起，所有文档和报告都统一保存在 https://github.com/slackman-cn/dotnet-eShop 。
+- 提交内容：
+  - `docs/eShop-steps.md`
+  - `docs/screenshots/`，共 6 张截图
+  - `docs/scripts/pw-open.js` 和 `docs/scripts/pw-dashboard.js`
+  - 根目录的中文 `README.md`
+- 因为仓库是公开的，提交前已把仪表板登录令牌替换成 `<TOKEN_FROM_aspire_ps>`。
+- 结果：已直接推送到 `main`，提交为 `632d328521bb0c5a0e3d4370b0a21e288486ecd5`（`560d425..632d328`），没有创建 PR。仓库里没有放 eShop 源代码。
+
+---
+
+## Step 4：架构设计研究（2026-11-15，UTC+8）
+
+按用户要求，在不编造的前提下，基于 `/workspace/eShop` 源码（提交 `913acea66708a59595351174cee9b29f37179d29`）撰写微服务架构设计文档，按真实项目规划的口径组织。未执行 `aspire deploy`，也未向 GitHub 推送。
+
+### 做了什么
+- 阅读 AppHost、各微服务 Program/Extensions/csproj、集成事件发布与订阅、gRPC proto、Identity 客户端配置、EventBus/Outbox、订单状态机与下单命令、Catalog AI、README 与部署相关文件（确认仓库中没有 Dockerfile / azure.yaml / azd）。
+- 结合 Step 3 本地实测的 17 个资源与 mobile-bff 问题。
+- 产出中文文档，含架构总览与下单时序两张 mermaid 图、服务/事件清单、模式对照表，以及建议的团队划分与里程碑（规划部分已标明）。
+
+### 主要阅读的文件
+- `src/eShop.AppHost/AppHost.cs`、`Extensions.cs`、`eShop.AppHost.csproj`
+- `src/eShop.ServiceDefaults/Extensions.cs`、`AuthenticationExtensions.cs`、`OpenApi.Extensions.cs`
+- `src/Identity.API/Program.cs`、`Configuration/Config.cs`
+- `src/Catalog.API/Program.cs`、`Extensions/Extensions.cs`、`Apis/CatalogApi.cs`、`Services/CatalogAI.cs`、相关 IntegrationEvents
+- `src/Basket.API/Program.cs`、`Extensions/Extensions.cs`、`Proto/basket.proto`
+- `src/Ordering.API/Program.cs`、`Extensions/Extensions.cs`、`Apis/OrdersApi.cs`、`Application/Commands/CreateOrderCommandHandler.cs`、`Application/Behaviors/TransactionBehavior.cs`、`Application/IntegrationEvents/*`
+- `src/Ordering.Domain/AggregatesModel/OrderAggregate/OrderStatus.cs`、`src/Ordering.Infrastructure/OrderingContext.cs`
+- `src/OrderProcessor/Services/GracePeriodManagerService.cs`、`GracePeriodOrdersRepository.cs`、`appsettings.json`
+- `src/PaymentProcessor/Program.cs`、`PaymentOptions.cs`、支付事件处理器
+- `src/Webhooks.API/Extensions/Extensions.cs`、`Apis/WebHooksApi.cs`
+- `src/WebApp/Program.cs`、`Extensions/Extensions.cs`、`Services/OrderingService.cs`
+- `src/EventBusRabbitMQ/RabbitMQEventBus.cs`、`src/IntegrationEventLogEF/*`、`src/EventBus/Abstractions/IEventBus.cs`
+- `src/ClientApp/Services/Settings/SettingsService.cs`
+- `global.json`、`aspire.config.json`、`Directory.Packages.props`、`README.md`、`eShop.slnx`
+
+### 产出路径
+- `/workspace/eshop-docs/docs/architecture.md`（主文档）
+- `/workspace/architecture.md`（同内容副本，便于发送）
+- 本步骤已追加到 `/workspace/eShop-steps.md`，并同步覆盖 `/workspace/eshop-docs/docs/eShop-steps.md`（同步副本中的仪表板登录令牌保持为占位符 `<TOKEN_FROM_aspire_ps>`）
+- 打包：`/workspace/eshop-docs-step4.tar.gz`（内含 `docs/architecture.md`、`docs/eShop-steps.md`）
+
+**结果：架构设计文档已完成，未推送仓库 ✅**

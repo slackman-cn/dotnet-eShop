@@ -6,6 +6,7 @@
 
 ## 文档
 
-- [步骤记录](docs/eShop-steps.md)：Step 1 环境搭建、Step 2 项目结构 / 依赖 / 中间件分析、Step 3 Aspire 本地部署，以及附录
+- [步骤记录](docs/eShop-steps.md)：Step 1 环境搭建、Step 2 项目结构 / 依赖 / 中间件分析、Step 3 Aspire 本地部署、Step 4 架构设计研究，以及附录
+- [架构设计](docs/architecture.md)：按真实项目规划口径整理的微服务 / 云原生参考架构说明
 - [截图](docs/screenshots/)：首页、商品详情、Aspire 仪表板等
 - [脚本](docs/scripts/)：用 Playwright 打开站点与仪表板的辅助脚本
