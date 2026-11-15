@@ -1,0 +1,12 @@
+# 仅用于本机部署尝试，不修改上游仓库文件。
+# 上游 docker-compose.yml 中 Postgres 健康检查为：
+#   pg_isready -U app -d articles
+# 与 docker-compose.override.yml 中的 POSTGRES_USER=postgres、POSTGRES_DB=ArticleHubDb 不一致，
+# 若用 compose 启动 articleHub-api，会因一直等不到 healthy 而卡住。
+services:
+  postgres:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ArticleHubDb"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
