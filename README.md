@@ -1,6 +1,6 @@
-# .NET 项目分析文档
+# 项目分析文档
 
-本仓库用来记录对多个 .NET 开源项目的分析、步骤记录和结论，不包含各项目的源代码。
+本仓库用来记录对多个开源项目的分析、步骤记录和结论，不包含各项目的源代码。早期条目以 .NET 项目为主，也收录其他技术栈。
 
 每个上游项目对应一个目录。当前已收录：
 
@@ -8,8 +8,9 @@
 | --- | --- | --- |
 | [github-eShop](github-eShop/) | [dotnet/eShop](https://github.com/dotnet/eShop) | Microsoft 官方的云原生电商参考应用；本仓库按现有微服务架构进行分析 |
 | [github-Articles](github-Articles/) | [ldumit/Articles](https://github.com/ldumit/Articles) | 学术期刊投稿与审稿微服务系统；用 Docker Compose + 各 API 进程启动（不是 Aspire） |
+| [github-paperless-ngx](github-paperless-ngx/) | [paperless-ngx/paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) | 文档管理系统（Python / Django + Angular）；主要用 Docker Compose 启动 |
 
-后续分析其他 .NET 项目时，会在仓库根目录新增同级目录，并在上表补充条目。
+后续分析其他项目时，会在仓库根目录新增同级目录，并在上表补充条目。
 
 ## github-eShop：dotnet/eShop
 
@@ -53,3 +54,18 @@
 - [本地覆盖配置](github-Articles/docker-compose.local.yml)：叠加在上游 compose 上的 Postgres 健康检查覆盖
 - [截图](github-Articles/screenshots/)：各 API 的 Swagger、Hasura Console、RabbitMQ 管理页
 - 目录说明见 [github-Articles/README.md](github-Articles/README.md)
+
+## github-paperless-ngx：paperless-ngx/paperless-ngx
+
+- **上游仓库：** [paperless-ngx/paperless-ngx](https://github.com/paperless-ngx/paperless-ngx)
+- **对照提交：** [`4610171a94e5932e85a80e480032e397cdb6f309`](https://github.com/paperless-ngx/paperless-ngx/commit/4610171a94e5932e85a80e480032e397cdb6f309)（Chore (dev): add tsconfig missing types），分支 `dev`
+- **项目定位：** 文档管理系统，负责文档摄入、OCR、分类、全文检索、邮件收件和 Web 管理界面。
+- **技术栈（摘要）：** Python ≥ 3.11、Django 5.2、Celery、Granian ASGI；前端 Angular 22（`src-ui`，pnpm）。中间件为 Valkey（Redis 兼容）、Postgres 18 / MariaDB 12 / SQLite，可选 Apache Tika 与 Gotenberg。应用容器内同时运行 Web、Celery worker/beat 和消费目录监视进程。
+- **本地研究环境：** 已在分析用 Linux 环境浅克隆，尚未在本机部署运行。Step 2 完成仓库分析。本仓库只保存文档，不保存 paperless-ngx 源码。
+- **文档目录：** [github-paperless-ngx/](github-paperless-ngx/)
+
+### 文档清单
+
+- [仓库分析](github-paperless-ngx/analysis.md)：项目结构、依赖、中间件、进程模型、启动命令、部署与配置、数据流
+- [步骤记录](github-paperless-ngx/paperless-ngx-steps.md)：Step 1 下载代码，Step 2 仓库分析
+- 目录说明见 [github-paperless-ngx/README.md](github-paperless-ngx/README.md)
