@@ -813,3 +813,25 @@ aspire ps --non-interactive --nologo
 - 打包：`/workspace/eshop-docs-step6.tar.gz`（内含 `docs/serverless-faas-baas.md`、`docs/eShop-steps.md`）
 
 **结果：Serverless 对比文档已完成，未推送仓库 ✅**
+
+---
+
+## Step 7：决定放弃 Serverless 改造（2026-11-15，Asia/Shanghai）
+
+用户明确决定：**放弃 Serverless 架构，没有明显优势。**
+
+### 做了什么
+- 将该决定记录为项目规划决策：后续不再按 FaaS / BaaS 改造本项目，继续采用现有的 .NET 10 + Aspire 进程型微服务方案。
+- 在 `docs/serverless-faas-baas.md` 文首增加决策说明；原文作为评估记录保留，不再作为改造实施依据。
+- 同步更新步骤记录，并提交到 `https://github.com/slackman-cn/dotnet-eShop` 的 `main` 分支。
+
+### 决策原因（与 Step 6 评估一致）
+- Serverless 在闲置成本、少运维中间件、工人弹性上有收益，但不是全面更优。
+- 代价包括冷启动（首页 / 浏览）、连接池、Basket 的 gRPC、订单 Saga / Outbox 改造成本，以及本地 Aspire 一键编排体验变弱。
+- 用户判断这些收益没有明显优势，因此不走混合路径或全量重构，维持现状架构。
+
+### 产出路径
+- 更新后的 `/workspace/eshop-docs/docs/serverless-faas-baas.md` 与 `/workspace/serverless-faas-baas.md`
+- 本步骤已追加到 `/workspace/eShop-steps.md`，并同步到 `/workspace/eshop-docs/docs/eShop-steps.md`
+
+**结果：决策已记录，准备提交仓库。**
