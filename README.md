@@ -9,6 +9,7 @@
 | [github-eShop](github-eShop/) | [dotnet/eShop](https://github.com/dotnet/eShop) | Microsoft 官方的云原生电商参考应用；本仓库按现有微服务架构进行分析 |
 | [github-Articles](github-Articles/) | [ldumit/Articles](https://github.com/ldumit/Articles) | 学术期刊投稿与审稿微服务系统；用 Docker Compose + 各 API 进程启动（不是 Aspire） |
 | [github-paperless-ngx](github-paperless-ngx/) | [paperless-ngx/paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) | 文档管理系统（Python / Django + Angular）；主要用 Docker Compose 启动 |
+| [github-trustgraph](github-trustgraph/) | [trustgraph-ai/trustgraph](https://github.com/trustgraph-ai/trustgraph) | 面向 W3C 本体（RDF/OWL/SHACL/SPARQL）的知识图谱运行时；官方推荐 Docker / Podman Compose 部署 |
 
 后续分析其他项目时，会在仓库根目录新增同级目录，并在上表补充条目。
 
@@ -72,3 +73,19 @@
 - [步骤记录](github-paperless-ngx/paperless-ngx-steps.md)：Step 1 下载代码，Step 2 仓库分析，Step 3 本机部署运行，Step 4 架构设计
 - [截图](github-paperless-ngx/screenshots/)：登录页与仪表盘
 - 目录说明见 [github-paperless-ngx/README.md](github-paperless-ngx/README.md)
+
+## github-trustgraph：trustgraph-ai/trustgraph
+
+- **上游仓库：** [trustgraph-ai/trustgraph](https://github.com/trustgraph-ai/trustgraph)
+- **对照提交：** [`17e5d74`](https://github.com/trustgraph-ai/trustgraph/commit/17e5d74)（release/v2.11 -> master (#1208)），分支 `master`，时间 2026-11-13 05:32（Asia/Shanghai）
+- **项目定位：** 面向 W3C 本体（RDF / OWL / SHACL / SPARQL）的知识图谱运行时，把文档摄入、向量检索、图存储和智能体编排放在同一套栈里。
+- **技术栈（摘要）：** 官方部署不依赖从本仓库自行编译。用 `npx @trustgraph/config` 或 [配置页面](https://config-ui.demo.trustgraph.ai/) 生成 `deploy.zip`（含 `docker-compose.yaml` 与 `INSTALLATION.md`）。默认中间件为 Cassandra、Qdrant、Pulsar，另有 MinIO、Prometheus、Grafana、Loki；大模型默认走云端 API。
+- **本地研究环境：** 已在分析用 Linux 环境（Debian 13）浅克隆到 `/workspace/trustgraph`。2026-11-19 完成仓库分析与 Docker Engine 安装（`hello-world` 已跑通）；尚未生成 Compose 配置，也尚未部署 TrustGraph。本仓库只保存文档，不保存 TrustGraph 源码与密钥。
+- **文档目录：** [github-trustgraph/](github-trustgraph/)
+
+### 文档清单
+
+- [仓库分析与部署评估](github-trustgraph/analysis.md)：部署方式、官方资源门槛、本机是否满足、默认 Docker 镜像表
+- [Docker 安装步骤](github-trustgraph/docker-install.md)：本机因 apt 代理失败，改用官方静态包安装 Docker Engine / Compose / Buildx 的过程
+- [步骤记录](github-trustgraph/trustgraph-steps.md)：Step 1 下载代码，Step 2 仓库分析，Step 3 安装 Docker
+- 目录说明见 [github-trustgraph/README.md](github-trustgraph/README.md)
