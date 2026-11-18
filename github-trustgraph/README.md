@@ -16,10 +16,12 @@
 | Step 2 结论 | 已完成仓库分析与环境对照（见 `analysis.md`）。8 核与磁盘足够；分析当时可用内存约 7.8 GiB，低于官方 Compose 建议的 12 GB 以上。当时尚未安装 Docker。未生成 `deploy.zip`，未部署 |
 | Step 3 结论 | 2026-11-19 00:35（Asia/Shanghai）已在本机装好 Docker Engine 29.9.3、Compose v5.7.1、Buildx v0.39.0，并用 `hello-world` 验证。详细步骤见 `docker-install.md` |
 | Step 4 结论 | 2026-11-19 已用官方 2.10 Compose 在 `/workspace/trustgraph-deploy` 启动。界面可打开，但因 iptables-legacy 与 iptables-nft 规则冲突，容器互访被丢弃，API 网关连不上 RabbitMQ，页面报 `bootstrap-status failed: 504`。已在 legacy FORWARD 中放行 Compose 网桥后恢复，详见 `docker-network.md` |
+| Step 5 结论 | 2026-11-19（Asia/Shanghai）已编写详细架构说明，见 `architecture.md`。按 TrustGraph 自身的运行时、处理器组、总线、IAM 与吸入流水线组织，不套用 eShop 文档的写法 |
 
 ## 文档
 
 - [analysis.md](./analysis.md)：仓库分析与部署评估（方式、门槛、本机对照、官方推荐镜像）
+- [architecture.md](./architecture.md)：详细架构说明（按 TrustGraph 作为知识图谱运行时的结构来写，不是照搬电商微服务文档的章节模板；含运行时模型、控制面与业务面、存储、IAM、吸入与 RAG 流水线、网关 API，以及本次 2.10.21 Compose 实例）
 - [docker-install.md](./docker-install.md)：本机 Docker 安装步骤与验证结果
 - [docker-network.md](./docker-network.md)：Compose 容器互访被 iptables-legacy 拦截的现象、原因和处理
 - [trustgraph-steps.md](./trustgraph-steps.md)：分步记录（命令、版本、结果、限制）

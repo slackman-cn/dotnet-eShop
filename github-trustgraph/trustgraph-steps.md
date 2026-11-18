@@ -43,3 +43,16 @@
 安装结果：Docker Engine 29.9.3，Compose v5.7.1，Buildx v0.39.0。用户 `box` 已加入 `docker` 组。机器重启后需重新执行启动脚本。
 
 仍未部署 TrustGraph。
+
+## Step 4 本机 Compose 部署与网络处理
+
+时间：2026-11-19（Asia/Shanghai）。
+
+已用官方 2.10 Compose 在 `/workspace/trustgraph-deploy` 启动。过程中的 Docker 安装见 [docker-install.md](./docker-install.md)；容器互访被 iptables-legacy 拦截及处理见 [docker-network.md](./docker-network.md)。后续还处理过对象存储初始化失败和引导令牌格式问题，细节见 [architecture.md](./architecture.md) 第 12 节，本文不重复密钥或口令。
+
+## Step 5 编写详细架构说明
+
+时间：2026-11-19（Asia/Shanghai）。
+
+对照上游源码（`/workspace/trustgraph`，`master`，提交 `17e5d74`）和本机官方 2.10 Compose 实例（`/workspace/trustgraph-deploy`，业务镜像 2.10.21），编写了 [architecture.md](./architecture.md）。文档按 TrustGraph 作为知识图谱运行时的结构组织（处理器组、消息总线、控制面、存储、IAM、吸入与查询流水线、网关 API），不套用同仓库里 eShop 等微服务项目的章节模板。源码不进入本分析仓库，文中不含密钥、口令或令牌明文。
+
