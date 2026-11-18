@@ -80,12 +80,13 @@
 - **对照提交：** [`17e5d74`](https://github.com/trustgraph-ai/trustgraph/commit/17e5d74)（release/v2.11 -> master (#1208)），分支 `master`，时间 2026-11-13 05:32（Asia/Shanghai）
 - **项目定位：** 面向 W3C 本体（RDF / OWL / SHACL / SPARQL）的知识图谱运行时，把文档摄入、向量检索、图存储和智能体编排放在同一套栈里。
 - **技术栈（摘要）：** 官方部署不依赖从本仓库自行编译。用 `npx @trustgraph/config` 或 [配置页面](https://config-ui.demo.trustgraph.ai/) 生成 `deploy.zip`（含 `docker-compose.yaml` 与 `INSTALLATION.md`）。默认中间件为 Cassandra、Qdrant、Pulsar，另有 MinIO、Prometheus、Grafana、Loki；大模型默认走云端 API。
-- **本地研究环境：** 已在分析用 Linux 环境（Debian 13）浅克隆到 `/workspace/trustgraph`。2026-11-19 完成仓库分析与 Docker Engine 安装（`hello-world` 已跑通）；尚未生成 Compose 配置，也尚未部署 TrustGraph。本仓库只保存文档，不保存 TrustGraph 源码与密钥。
+- **本地研究环境：** 已在分析用 Linux 环境（Debian 13）浅克隆到 `/workspace/trustgraph`。2026-11-19 完成仓库分析与 Docker Engine 安装，并已用官方 2.10 Compose 在 `/workspace/trustgraph-deploy` 启动。启动后出现容器互访失败（管理页 504），已定位为 iptables-legacy 与 iptables-nft 规则冲突并处理，见 [docker-network.md](github-trustgraph/docker-network.md)。本仓库只保存文档，不保存 TrustGraph 源码与密钥。
 - **文档目录：** [github-trustgraph/](github-trustgraph/)
 
 ### 文档清单
 
 - [仓库分析与部署评估](github-trustgraph/analysis.md)：部署方式、官方资源门槛、本机是否满足、默认 Docker 镜像表
 - [Docker 安装步骤](github-trustgraph/docker-install.md)：本机因 apt 代理失败，改用官方静态包安装 Docker Engine / Compose / Buildx 的过程
+- [Compose 容器互访与 iptables](github-trustgraph/docker-network.md)：容器互访被 iptables-legacy 拦截的现象、原因和处理
 - [步骤记录](github-trustgraph/trustgraph-steps.md)：Step 1 下载代码，Step 2 仓库分析，Step 3 安装 Docker
 - 目录说明见 [github-trustgraph/README.md](github-trustgraph/README.md)

@@ -118,3 +118,7 @@ docker run --rm hello-world
 - 重启后要手动执行 `sudo /usr/local/sbin/start-dockerd.sh`。
 - 新登录会话会继承 `docker` 组；若当前会话还没有该组，可继续用上述套接字权限，或用 `sg docker -c 'docker ...'`。
 - 安装 Docker 只是 TrustGraph 部署的前置条件，并不等于已经部署 TrustGraph。
+
+## 后续问题：Compose 容器互访失败
+
+`hello-world` 只能证明守护进程、拉镜像和默认桥接可用，不能证明 Compose 项目里的容器可以互相访问。2026-11-19 01:04（Asia/Shanghai）在启动 TrustGraph 时发现：宿主机能连上容器端口，容器之间的 TCP 却全部超时。原因不是 `docker0` 没建好，而是本机同时存在 iptables-nft 与 iptables-legacy 两套规则，legacy 的 FORWARD 默认 DROP，且只放行了 `docker0`。处理方法和完整对照见 [docker-network.md](./docker-network.md)。
