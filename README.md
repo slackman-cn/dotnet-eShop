@@ -10,6 +10,7 @@
 | [github-Articles](github-Articles/) | [ldumit/Articles](https://github.com/ldumit/Articles) | 学术期刊投稿与审稿微服务系统；用 Docker Compose + 各 API 进程启动（不是 Aspire） |
 | [github-paperless-ngx](github-paperless-ngx/) | [paperless-ngx/paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) | 文档管理系统（Python / Django + Angular）；主要用 Docker Compose 启动 |
 | [github-trustgraph](github-trustgraph/) | [trustgraph-ai/trustgraph](https://github.com/trustgraph-ai/trustgraph) | 面向 W3C 本体（RDF/OWL/SHACL/SPARQL）的知识图谱运行时；官方推荐 Docker / Podman Compose 部署 |
+| [github-WeKnora](github-WeKnora/) | [Tencent/WeKnora](https://github.com/Tencent/WeKnora) | 腾讯开源知识库与问答系统；官方推荐 Docker Compose 部署，默认用 ParadeDB 做混合检索 |
 
 后续分析其他项目时，会在仓库根目录新增同级目录，并在上表补充条目。
 
@@ -91,3 +92,19 @@
 - [Compose 容器互访与 iptables](github-trustgraph/docker-network.md)：容器互访被 iptables-legacy 拦截的现象、原因和处理
 - [步骤记录](github-trustgraph/trustgraph-steps.md)：Step 1 下载代码，Step 2 仓库分析，Step 3 安装 Docker，Step 4 本机 Compose 部署与网络处理，Step 5 编写详细架构说明
 - 目录说明见 [github-trustgraph/README.md](github-trustgraph/README.md)
+
+## github-WeKnora：Tencent/WeKnora
+
+- **上游仓库：** [Tencent/WeKnora](https://github.com/Tencent/WeKnora)
+- **对照提交：** [`81a0304`](https://github.com/Tencent/WeKnora/commit/81a03046bed16504d249bb22591492966fc9c9b9)（Merge pull request #5658），分支 `main`，时间 2026-11-18 20:55（Asia/Shanghai）。仓库版本文件为 `0.9.0`
+- **项目定位：** 知识库与问答系统，把文档解析、向量化、混合检索和大模型推理放在一套可替换组件里。
+- **技术栈（摘要）：** Go 后端、Vue 前端、Python `docreader`；默认 ParadeDB（PostgreSQL 17，含 BM25 与向量扩展）和 Redis / Asynq。官方推荐 Docker Compose，也提供 Helm、Lite 单二进制。本次只分析 Compose，未使用 Kubernetes。
+- **本地研究环境：** 已在分析用 Linux 环境浅克隆到 `/workspace/WeKnora`。2026-11-19 完成部署方式对照与知识库链路梳理，尚未启动 Compose。本仓库只保存文档，不保存 WeKnora 源码与密钥。
+- **文档目录：** [github-WeKnora/](github-WeKnora/)
+
+### 文档清单
+
+- [仓库分析与部署评估](github-WeKnora/analysis.md)：部署形态、官方资源门槛、本机是否满足、核心与可选 Docker 镜像
+- [知识库链路](github-WeKnora/pipeline.md)：文档入库、检索问答、可选知识图谱，以及五类模型
+- [步骤记录](github-WeKnora/weknora-steps.md)：Step 1 下载代码，Step 2 检查部署方式，Step 3 梳理知识库链路
+- 目录说明见 [github-WeKnora/README.md](github-WeKnora/README.md)
