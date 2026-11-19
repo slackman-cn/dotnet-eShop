@@ -19,3 +19,7 @@
 
 - [analysis.md](./analysis.md)：仓库分析与部署评估（形态、启动命令、核心服务、本机对照）
 - [yuxi-steps.md](./yuxi-steps.md)：分步记录（命令、版本、结果、限制）
+- [architecture.md](./architecture.md)：系统架构长文（进程拓扑、数据归属、运行链路、扩展登记；基于本机 `main` @ `47e4e5a`，不是官方 `v0.8.0` 标签树）
+- [features.md](./features.md)：功能规格长文（按能力域与二次开发场景整理内核、默认开启项和少数真实开关）
+
+以上两份长文不覆盖 `analysis.md` 与 `yuxi-steps.md` 中已有的部署短笔记。正文只依据本机 Yuxi 源码树和仓库内官方文件，撰写时未启动 Compose。
