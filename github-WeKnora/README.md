@@ -22,3 +22,5 @@
 - [analysis.md](./analysis.md)：仓库分析与部署评估（部署形态、门槛、本机对照、核心与可选服务镜像）
 - [pipeline.md](./pipeline.md)：知识库链路（入库、问答、可选知识图谱、模型类型）
 - [weknora-steps.md](./weknora-steps.md)：分步记录（命令、版本、结果、限制）
+
+另外收录两份对照 0.9.0 源码写成的长文，不替代上述部署备忘，也不改写其内容：[architecture.md](./architecture.md) 说明系统架构（进程拓扑、分层、数据模型、入库与问答控制流、图谱接入、模型抽象、存储与 API 形状）；[features.md](./features.md) 按能力说明功能（默认核心与选配、入口与依赖、重叠路径及本版本明确不包含的项）。两文均未启动运行栈。
