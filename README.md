@@ -11,6 +11,7 @@
 | [github-paperless-ngx](github-paperless-ngx/) | [paperless-ngx/paperless-ngx](https://github.com/paperless-ngx/paperless-ngx) | 文档管理系统（Python / Django + Angular）；主要用 Docker Compose 启动 |
 | [github-trustgraph](github-trustgraph/) | [trustgraph-ai/trustgraph](https://github.com/trustgraph-ai/trustgraph) | 面向 W3C 本体（RDF/OWL/SHACL/SPARQL）的知识图谱运行时；官方推荐 Docker / Podman Compose 部署 |
 | [github-WeKnora](github-WeKnora/) | [Tencent/WeKnora](https://github.com/Tencent/WeKnora) | 腾讯开源知识库与问答系统；官方推荐 Docker Compose 部署，默认用 ParadeDB 做混合检索 |
+| [github-Yuxi](github-Yuxi/) | [xerrors/Yuxi](https://github.com/xerrors/Yuxi) | 可私有部署的多租户知识智能体平台；官方用 Docker Compose，默认包含 Milvus 与 Neo4j |
 
 后续分析其他项目时，会在仓库根目录新增同级目录，并在上表补充条目。
 
@@ -108,3 +109,18 @@
 - [知识库链路](github-WeKnora/pipeline.md)：文档入库、检索问答、可选知识图谱，以及五类模型
 - [步骤记录](github-WeKnora/weknora-steps.md)：Step 1 下载代码，Step 2 检查部署方式，Step 3 梳理知识库链路
 - 目录说明见 [github-WeKnora/README.md](github-WeKnora/README.md)
+
+## github-Yuxi：xerrors/Yuxi
+
+- **上游仓库：** [xerrors/Yuxi](https://github.com/xerrors/Yuxi)
+- **对照提交：** [`47e4e5a`](https://github.com/xerrors/Yuxi/commit/47e4e5a6d905584b3ed47c993c8a7aeb47c15f39)（fix: 优化会话工具时间线和 Shell 结果展示），分支 `main`，时间 2026-11-18 17:30（Asia/Shanghai）。`backend/pyproject.toml` 版本为 `0.8.0`。官方快速开始要求克隆 `v0.8.0` 标签
+- **项目定位：** 可私有部署的多租户知识智能体平台（Cloud Agents + Knowledge RAG），包含知识库、知识图谱、多智能体编排和沙盒执行。
+- **技术栈（摘要）：** Python 3.13 后端；Docker Compose 编排。默认中间件为 PostgreSQL 16、Redis、MinIO、Milvus（依赖 etcd）和 Neo4j。应用镜像在本机构建。沙盒默认 Container，可选 Cube（需 KVM）。
+- **本地研究环境：** 已在分析用 Linux 环境浅克隆到 `/workspace/Yuxi`。2026-11-19 完成部署方式对照，尚未运行初始化脚本，尚未启动 Compose。本仓库只保存文档，不保存 Yuxi 源码与密钥。
+- **文档目录：** [github-Yuxi/](github-Yuxi/)
+
+### 文档清单
+
+- [仓库分析与部署评估](github-Yuxi/analysis.md)：部署形态、启动命令、核心与可选服务、本机对照
+- [步骤记录](github-Yuxi/yuxi-steps.md)：Step 1 下载代码，Step 2 分析部署方式
+- 目录说明见 [github-Yuxi/README.md](github-Yuxi/README.md)
